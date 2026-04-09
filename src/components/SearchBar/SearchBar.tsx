@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { parseISO, format } from "date-fns";
+import type { CustomEvent } from "../../types";
 import styles from "./SearchBar.module.css";
 
 interface SearchResult {
@@ -12,6 +13,15 @@ interface SearchResult {
 interface Props {
   onResultClick: (date: Date) => void;
   onMatchesChange: (matches: Set<string>) => void;
+}
+
+function loadCustomEvents(): CustomEvent[] {
+  try {
+    const raw = localStorage.getItem("calendar-events");
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
 }
 
 function searchNotes(query: string): SearchResult[] {
@@ -58,6 +68,17 @@ function searchNotes(query: string): SearchResult[] {
       (end < val.length ? "..." : "");
 
     results.push({ key: k, label, snippet, dates });
+  }
+
+  const events = loadCustomEvents();
+  for (const ev of events) {
+    if (!ev.title.toLowerCase().includes(q)) continue;
+    try {
+      const d = parseISO(ev.date);
+      const label = `Event: ${format(d, "MMM d, yyyy")}`;
+      const snippet = ev.title + (ev.recurrence === "yearly" ? " (Yearly)" : "");
+      results.push({ key: `event-${ev.id}`, label, snippet, dates: [ev.date] });
+    } catch { /* skip malformed dates */ }
   }
 
   return results;
@@ -127,8 +148,8 @@ export function SearchBar({ onResultClick, onMatchesChange }: Props) {
           value={query}
           onChange={(e) => handleChange(e.target.value)}
           onFocus={() => results.length > 0 && setIsOpen(true)}
-          placeholder="Search all notes..."
-          aria-label="Search notes"
+          placeholder="Search notes & events..."
+          aria-label="Search notes and events"
         />
         {query && (
           <button
