@@ -1,0 +1,76 @@
+.strip {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.miniMonth {
+  flex: 0 0 auto;
+  min-width: 120px;
+}
+
+.miniLabel {
+  text-align: center;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  margin-bottom: 0.2rem;
+}
+
+.miniGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+}
+
+.miniWeekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0.1rem 0;
+  user-select: none;
+}
+
+.miniDay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.58rem;
+  padding: 0.12rem 0;
+  color: var(--text-primary);
+  border-radius: 2px;
+  transition: background 0.1s ease;
+  line-height: 1;
+}
+
+.miniDay:hover {
+  background: var(--bg-day-hover);
+}
+
+.miniOutside {
+  opacity: 0.25;
+}
+
+.miniToday {
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-light);
+  border-radius: 3px;
+}
+
+@media (max-width: 600px) {
+  .strip {
+    gap: 0.3rem;
+  }
+
+  .miniMonth {
+    min-width: 100px;
+  }
+}
