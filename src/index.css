@@ -114,30 +114,3 @@ img {
   color: var(--text-primary);
 }
 
-/* Print stylesheet */
-@media print {
-  @page { margin: 1cm; }
-
-  * {
-    box-shadow: none !important;
-    text-shadow: none !important;
-    transition: none !important;
-    animation: none !important;
-  }
-
-  body {
-    background: #fff !important;
-    color: #000 !important;
-  }
-
-  [data-theme="dark"] {
-    --bg-page: #fff;
-    --bg-calendar: #fff;
-    --bg-notes: #fff;
-    --text-primary: #000;
-    --text-secondary: #333;
-    --text-muted: #666;
-    --border: #ccc;
-    --accent: #333;
-  }
-}

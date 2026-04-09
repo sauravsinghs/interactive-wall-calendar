@@ -17,7 +17,6 @@ A polished, interactive wall calendar component built with React and TypeScript.
 - **Save confetti** -- micro-animation on note save using canvas-confetti
 - **Holiday markers** -- visual dots and tooltips for notable holidays
 - **Month flip animation** -- subtle CSS perspective transition between months
-- **Print stylesheet** -- clean print output with hidden UI chrome
 - **Fully responsive** -- side-by-side on desktop, stacked on mobile, optimized for tablets
 
 ## Tech Stack & Rationale
