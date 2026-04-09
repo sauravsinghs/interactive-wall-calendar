@@ -21,6 +21,14 @@ export function EventModal({ date, anchorRect, existingEvents, onAdd, onDelete, 
   const [recurrence, setRecurrence] = useState<"none" | "yearly">("none");
   const modalRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<{ top: number; left: number }>({ top: -9999, left: -9999 });
+  const prevEventCount = useRef(existingEvents.length);
+
+  useEffect(() => {
+    if (prevEventCount.current > 0 && existingEvents.length === 0) {
+      onClose();
+    }
+    prevEventCount.current = existingEvents.length;
+  }, [existingEvents.length, onClose]);
 
   useLayoutEffect(() => {
     const modal = modalRef.current;
