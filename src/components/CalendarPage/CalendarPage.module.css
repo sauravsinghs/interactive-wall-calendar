@@ -1,0 +1,225 @@
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1080px;
+  margin-bottom: 1rem;
+}
+
+.layout {
+  display: flex;
+  gap: 2rem;
+  max-width: 1080px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.calendarColumn {
+  position: relative;
+  flex: 1.2;
+  min-width: 0;
+  max-width: 520px;
+}
+
+.calendarCard {
+  position: relative;
+  background: var(--bg-calendar);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 4px 24px var(--shadow),
+    0 1px 4px var(--shadow);
+  overflow: visible;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Ring binding */
+.ringBar {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.ring {
+  width: 28px;
+  height: 16px;
+  background: var(--ring-color);
+  border-radius: 14px 14px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.ringHole {
+  width: 10px;
+  height: 6px;
+  background: var(--ring-hole);
+  border-radius: 5px 5px 0 0;
+}
+
+.calendarBody {
+  padding-top: 0.25rem;
+  background: var(--bg-calendar);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.rangeHint {
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 0.25rem 1rem 0;
+  animation: fadeInHint 0.2s ease;
+}
+
+@keyframes fadeInHint {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Action buttons row */
+.actionButtons {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  display: flex;
+  gap: 0.35rem;
+  z-index: 20;
+}
+
+.themeToggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-calendar);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  box-shadow: 0 2px 8px var(--shadow);
+  transition: all 0.2s ease;
+}
+
+.themeToggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: rotate(15deg);
+}
+
+/* Notes column */
+.notesColumn {
+  flex: 1;
+  min-width: 0;
+  max-width: 460px;
+}
+
+/* Mini months: desktop below notes, mobile inside calendar column */
+.miniDesktop {
+  margin-top: 0.75rem;
+}
+
+.miniMobile {
+  display: none;
+}
+
+/* Tablet: keep side-by-side with tighter gap */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .topBar {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  .layout {
+    gap: 1.25rem;
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  .calendarColumn {
+    max-width: none;
+    flex: 1.1;
+  }
+
+  .notesColumn {
+    max-width: none;
+    flex: 1;
+  }
+}
+
+/* Phone: stack vertically */
+@media (max-width: 767px) {
+  .topBar {
+    justify-content: center;
+  }
+
+  .layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .calendarColumn {
+    max-width: 520px;
+    width: 100%;
+  }
+
+  .notesColumn {
+    max-width: 520px;
+    width: 100%;
+  }
+
+  .miniDesktop {
+    display: none;
+  }
+
+  .miniMobile {
+    display: block;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .topBar {
+    margin-bottom: 0.5rem;
+  }
+
+  .layout {
+    gap: 1.25rem;
+  }
+
+  .calendarColumn,
+  .notesColumn {
+    max-width: 100%;
+  }
+
+  .ringBar {
+    gap: 2.5rem;
+  }
+
+  .ring {
+    width: 22px;
+    height: 12px;
+  }
+
+  .ringHole {
+    width: 8px;
+    height: 5px;
+  }
+
+  .actionButtons {
+    top: -10px;
+    right: -4px;
+  }
+
+  .themeToggle {
+    width: 32px;
+    height: 32px;
+  }
+}
