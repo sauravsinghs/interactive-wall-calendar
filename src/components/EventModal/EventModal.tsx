@@ -1,9 +1,10 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useLayoutEffect } from "react";
 import { format } from "date-fns";
 import type { CustomEvent } from "../../types";
 import styles from "./EventModal.module.css";
 
 const PALETTE = ["#e74c3c", "#3498db", "#2ecc71", "#f39c12", "#9b59b6", "#1abc9c"];
+const MODAL_MARGIN = 8;
 
 interface Props {
   date: Date;
@@ -19,6 +20,27 @@ export function EventModal({ date, anchorRect, existingEvents, onAdd, onDelete, 
   const [color, setColor] = useState(PALETTE[0]);
   const [recurrence, setRecurrence] = useState<"none" | "yearly">("none");
   const modalRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState<{ top: number; left: number }>({ top: -9999, left: -9999 });
+
+  useLayoutEffect(() => {
+    const modal = modalRef.current;
+    if (!modal) return;
+
+    const { width: mW, height: mH } = modal.getBoundingClientRect();
+    const vW = window.innerWidth;
+    const vH = window.innerHeight;
+
+    let top = anchorRect.bottom + 4;
+    if (top + mH + MODAL_MARGIN > vH) {
+      top = anchorRect.top - mH - 4;
+    }
+    top = Math.max(MODAL_MARGIN, Math.min(top, vH - mH - MODAL_MARGIN));
+
+    let left = anchorRect.left;
+    left = Math.max(MODAL_MARGIN, Math.min(left, vW - mW - MODAL_MARGIN));
+
+    setPosition({ top, left });
+  }, [anchorRect, existingEvents.length]);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -52,14 +74,11 @@ export function EventModal({ date, anchorRect, existingEvents, onAdd, onDelete, 
     };
   }, [onClose]);
 
-  const top = anchorRect.bottom + 4;
-  const left = Math.min(anchorRect.left, window.innerWidth - 240);
-
   return (
     <div
       ref={modalRef}
       className={styles.modal}
-      style={{ top, left }}
+      style={{ top: position.top, left: position.left }}
     >
       <div className={styles.header}>
         <span className={styles.dateLabel}>{format(date, "MMM d, yyyy")}</span>
