@@ -53,6 +53,7 @@ export function EventModal({ date, anchorRect, existingEvents, onAdd, onDelete, 
         recurrence,
       });
       setTitle("");
+      onClose();
     },
     [title, color, recurrence, date, onAdd]
   );
